@@ -1,0 +1,119 @@
+ <!-- templates/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI CV Screening</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        
+        input[type="file"] {
+            margin-bottom: 20px;
+        }
+        
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        
+        #result {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            color: #333;
+        }
+        
+        p {
+            margin-bottom: 10px;
+        }
+        
+        #score {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        
+        #explanation {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI CV Screening</h1>
+    
+    <form id="cv-form" enctype="multipart/form-data">
+        <label for="cv-file">CV (PDF):</label>
+        <input type="file" id="cv-file" name="cv_file" accept=".pdf">
+        
+        <label for="job-description-file">Job Description (PDF):</label>
+        <input type="file" id="job-description-file" name="job_description_file" accept=".pdf">
+        
+        <input type="submit" value="Analyze">
+    </form>
+    
+    <div id="result">
+        <h2>Analysis Result</h2>
+        <p>Score: <span id="score"></span></p>
+        <p>Explanation: <span id="explanation"></span></p>
+    </div>
+
+    <script>
+        document.getElementById("cv-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            
+            fetch("/analyze", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("score").textContent = data.score;
+                document.getElementById("explanation").textContent = data.explanation;
+            });
+        });
+    </script>
+</body>
+</html>
