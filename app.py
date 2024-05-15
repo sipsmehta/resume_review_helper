@@ -5,7 +5,7 @@ import openai
 import PyPDF2
 
 app = Flask(__name__)
-openai.api_key = "sk-proj-n68N3o6F5CQ31qYpxn82T3BlbkFJfKbMmoet0gKelGtZLZpO"
+openai.api_key = "sk-proj-5lhptAxZa1dodCFUdia6T3BlbkFJU7KE0lTctWj8hMzkOnDU"
 
 def extract_text_from_pdf(file):
     pdf_reader = PyPDF2.PdfReader(file)
